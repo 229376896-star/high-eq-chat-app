@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高情商话术助手 - 职场沟通救星</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 768px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .search-box {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .search-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding: 10px;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .category-card.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .category-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .scripts-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .scenario-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scenario-item:hover {
+            background: #e9ecef;
+        }
+        
+        .scenario-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .script-list {
+            display: none;
+        }
+        
+        .script-list.show {
+            display: block;
+        }
+        
+        .script-item {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .script-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .script-tip {
+            font-size: 13px;
+            color: #667eea;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .copy-btn.copied {
+            background: #28a745;
+        }
+        
+        .favorites-section {
+            margin-top: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+        }
+        
+        .view-section {
+            display: none;
+        }
+        
+        .view-section.active {
+            display: block;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+        
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 480px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 高情商话术助手</h1>
+            <p>职场沟通尴尬时刻的救星，快速找到高情商回复</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchView('all')">全部场景</button>
+            <button class="tab-btn" onclick="switchView('favorites')">我的收藏</button>
+        </div>
+        
+        <div id="allView" class="view-section active">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 搜索话术，如：拒绝、道歉、汇报..." oninput="searchScripts()">
+            </div>
+            
+            <div class="category-grid" id="categoryGrid"></div>
+            
+            <div class="scripts-container">
+                <h2 class="section-title" id="sectionTitle">全部场景</h2>
+                <div id="scriptsList"></div>
+            </div>
+        </div>
+        
+        <div id="favoritesView" class="view-section">
+            <div class="scripts-container">
+                <h2 class="section-title">⭐ 我的收藏</h2>
+                <div id="favoritesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 话术数据库
+        const talkScripts = [
+            {
+                category: "拍马屁",
+                icon: "👔",
+                scenarios: [
+                    {
+                        title: "领导开会画饼时",
+                        scripts: [
+                            {
+                                text: "老板，您这饼画得比我妈做的煎饼果子还圆！但我就是爱吃，因为闻得到真香！",
+                                tip: "用美食比喻，真诚中带点皮"
+                            },
+                            {
+                                text: "听您说完我悟了，原来我不是在打工，是在参与一个改变行业的大项目！",
+                                tip: "升华工作意义，让领导觉得你懂了"
+                            },
+                            {
+                                text: "老板，您刚才说的那段话我能录下来吗？想设成每天起床的闹钟，比鸡汤管用。",
+                                tip: "夸张表达认可，幽默不尴尬"
+                            },
+                            {
+                                text: "别人开会我犯困，您开会我记笔记。不是卷，是真的怕漏听了什么金句。",
+                                tip: "对比式赞美，突出领导魅力"
+                            }
+                        ]
+                    },
+                    {
+                        title: "领导决策英明时",
+                        scripts: [
+                            {
+                                text: "老板您这决策速度，我建议申请吉尼斯纪录——'最快从问题到答案的人类'。",
+                                tip: "用纪录梗夸决策力"
+                            },
+                            {
+                                text: "说实话，我之前觉得这事不可能。但您一说完，我觉得是我格局小了。",
+                                tip: "先抑后扬，显得真实"
+                            },
+                            {
+                                text: "您这哪是决策啊，这是在给我们开上帝视角吧？一眼看穿全局。",
+                                tip: "游戏梗，夸战略眼光"
+                            },
+                            {
+                                text: "老板，我建议您出本书叫《领导的自我修养》，我第一个买，放床头天天读。",
+                                tip: "文化梗，表达学习意愿"
+                            }
+                        ]
+                    },
+                    {
+                        title: "领导关心团队时",
+                        scripts: [
+                            {
+                                text: "老板，您这么晚还在公司，我都有点愧疚了……这就把 PPT 改完再走！",
+                                tip: "用行动回应关心"
+                            },
+                            {
+                                text: "跟您混最大的感受：不是被管着干活，是被带着成长。",
+                                tip: "强调'跟对人'的幸运"
+                            },
+                            {
+                                text: "老板，您刚才那句话我截图了。以后遇到类似情况就拿出来当标准答案。",
+                                tip: "细节动作表达认可"
+                            },
+                            {
+                                text: "说实话，来公司前我以为领导都差不多。现在发现，您真的是天花板级别的。",
+                                tip: "直白对比，真诚赞美"
+                            }
+                        ]
+                    },
+                    {
+                        title: "朋友圈/群里互动",
+                        scripts: [
+                            {
+                                text: "老板发朋友圈必须第一时间点赞！手速练过，就是为了这个时刻。",
+                                tip: "主动表态但不卑微"
+                            },
+                            {
+                                text: "看到老板发的文章，我反复读了三遍。不是夸张，是真的每遍都有新收获。",
+                                tip: "表达认真学习态度"
+                            },
+                            {
+                                text: "群里老板发言后，我不发表情包了，直接收藏当语录。",
+                                tip: "用行动证明重视"
+                            },
+                            {
+                                text: "老板，您上次说的那个观点我跟朋友聊天都在用，他们问我在哪学的，我说跟我老板学的。",
+                                tip: "传播领导思想，最高级赞美"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                category: "同事协作",
+                icon: "🤝",
+                scenarios: [
+                    {
+                        title: "同事甩锅时的回应",
+                        scripts: [
+                            {
+                                text: "这锅咱俩一人一半，我那份我认了。现在先一起把菜炒好，不然都得饿着。",
+                                tip: "用做饭比喻，轻松化解"
+                            },
+                            {
+                                text: "兄弟，你这波操作有点像王者荣耀里抢人头还怪辅助不跟。咱们还是看看回放（聊天记录）吧。",
+                                tip: "游戏梗，幽默提醒"
+                            },
+                            {
+                                text: "甩锅大会暂停一下。我建议咱们先解决问题，赛后复盘再分 MVP 和背锅侠，如何？",
+                                tip: "用比赛术语，避免正面冲突"
+                            }
+                        ]
+                    },
+                    {
+                        title: "需要拒绝同事请求",
+                        scripts: [
+                            {
+                                text: "不是我不帮，是我现在的待办列表已经爆红了。你再等等，等我先把这堆 bug 修完。",
+                                tip: "用颜色形容忙碌，直观"
+                            },
+                            {
+                                text: "这个忙我有心无力啊。我现在是泥菩萨过江——自身难保，项目 deadline 就在明天。",
+                                tip: "歇后语 + 真实原因"
+                            },
+                            {
+                                text: "我这周的时间表比春运火车票还难抢。要不这样，下周我空一点了帮你看看？",
+                                tip: "春运梗，形象表达忙碌"
+                            }
+                        ]
+                    },
+                    {
+                        title: "跨部门沟通被推诿",
+                        scripts: [
+                            {
+                                text: "理解你们也有 KPI 压力。但这个项目老板在群里@过，咱们要不要拉个会快速对齐一下？",
+                                tip: "抬出老板，但不威胁"
+                            },
+                            {
+                                text: "我知道这不是你们的 OKR。但从公司大局看，这事做成了大家年终总结都有得写，对吧？",
+                                tip: "利益绑定，共赢思维"
+                            },
+                            {
+                                text: "要不这样，我发个邮件抄送双方老板，把时间线和责任分工写清楚，咱们按流程走，谁也不背锅。",
+                                tip: "正式化，留痕自保"
+                            }
+                        ]
+                    },
+                    {
+                        title: "同事邀功时的应对",
+                        scripts: [
+                            {
+                                text: "恭喜 XX 拿到 MVP！我作为助攻王也很开心，毕竟团队赢了才是真的赢。",
+                                tip: "体育梗，大度又不失存在感"
+                            },
+                            {
+                                text: "这个项目能成，XX 确实是 C 位输出，我作为辅助也尽力了。下次继续配合！",
+                                tip: "游戏术语，认可对方也肯定自己"
+                            },
+                            {
+                                text: "成功就好！我在其中负责的那部分能帮上忙，我也很有成就感。期待下次合作。",
+                                tip: "温和强调贡献，不撕破脸"
+                            }
+                        ]
+                    }
+                ]
+            },
+                        {
+                category: "会议发言",
+                icon: "📢",
+                scenarios: [
+                    {
+                        title: "开会时被点名发言",
+                        scripts: [
+                            {
+                                text: "好，我简单说三点——别紧张，真的是三点，不是领导的'稍微讲两句'。",
+                                tip: "自嘲式开场，缓解紧张"
+                            },
+                            {
+                                text: "刚才听了大家的讨论，我补充一个角度。说得不对的地方，欢迎大家随时打断。",
+                                tip: "降低预期，开放姿态"
+                            },
+                            {
+                                text: "这个问题我目前了解的信息还不够全面，不敢乱说。会后我调研一下再给大家详细汇报。",
+                                tip: "诚实承认，不瞎编"
+                            }
+                        ]
+                    },
+                    {
+                        title: "意见分歧时的表达",
+                        scripts: [
+                            {
+                                text: "你说的很有道理！我这边还有一个角度供参考，咱们看看哪个更合适。",
+                                tip: "先肯定，再补充"
+                            },
+                            {
+                                text: "咱们的目标是一致的，只是打法不同。你的方案优势是 XX，我的顾虑是 XX，有没有融合方案？",
+                                tip: "强调共识，寻求融合"
+                            },
+                            {
+                                text: "这个分歧点确实关键。要不咱们用小数据说话？A/B 测试一周看效果？",
+                                tip: "用实验代替争论"
+                            }
+                        ]
+                    },
+                    {
+                        title: "冷场时需要救场",
+                        scripts: [
+                            {
+                                text: "大家可能都在思考人生。我先抛个砖，说得不对大家随便砸……",
+                                tip: "自嘲破冰，活跃气氛"
+                            },
+                            {
+                                text: "这个问题确实有点难。要不咱们从最简单的开始？比如先决定中午吃什么？",
+                                tip: "幽默化解，降低门槛"
+                            },
+                            {
+                                text: "XX 老师是这个领域的天花板，要不您先给我们打个样？",
+                                tip: "捧专家，引导发言"
+                            }
+                        ]
+                    },
+                    {
+                        title: "被打断后的继续",
+                        scripts: [
+                            {
+                                text: "好的，我先把这点说完，大概 30 秒。然后超想听你的想法！",
+                                tip: "给时间预期 + 表达期待"
+                            },
+                            {
+                                text: "你说的问题我后面 PPT 第 5 页会讲到。让我先把前 4 页过完，这样逻辑更顺。",
+                                tip: "说明关联性，温和坚持"
+                            },
+                            {
+                                text: "好，我先把你这个问题记在小本本上。等我说完这部分，咱们专门讨论。",
+                                tip: "认可 + 延后处理"
+                            }
+                        ]
+                    }
+                ]
+            },
+                            {
+                                text: "刚才听了大家的讨论，我补充一个角度：从 XX 来看，我们还需要考虑...",
+                                tip: "承接他人 + 补充观点"
+                            },
+                            {
+                                text: "我这边目前的信息还不够全面，会后我整理一下再给大家详细汇报。",
+                                tip: "信息不足时不硬说"
+                            }
+                        ]
+                    },
+                    {
+                        title: "意见分歧时的表达",
+                        scripts: [
+                            {
+                                text: "你说的很有道理。同时我还有一个角度供参考：如果我们从 XX 角度看，可能会...",
+                                tip: "先认同，再补充"
+                            },
+                            {
+                                text: "咱们的目标是一致的，只是路径不同。你的方案优势是 XX，我的顾虑是 XX，有没有折中方案？",
+                                tip: "强调共识，寻找中间地带"
+                            },
+                            {
+                                text: "这个分歧点很关键。建议我们用数据说话，小范围测试一下两种方案的效果？",
+                                tip: "用数据和实验决策"
+                            }
+                        ]
+                    },
+                    {
+                        title: "冷场时需要救场",
+                        scripts: [
+                            {
+                                text: "大家可能还在思考。我先抛砖引玉说个想法，不对的地方大家指正...",
+                                tip: "主动破冰，降低姿态"
+                            },
+                            {
+                                text: "这个问题确实有难度。要不我们先从最简单的 XX 开始讨论？",
+                                tip: "降低讨论门槛"
+                            },
+                            {
+                                text: "XX 老师在这个领域最有经验，要不您先给我们开个头？",
+                                tip: "点名专家，引导发言"
+                            }
+                        ]
+                    },
+                    {
+                        title: "被打断后的继续",
+                        scripts: [
+                            {
+                                text: "好的，我先把这点说完，大概还需要 30 秒。然后很想听听你的想法。",
+                                tip: "温和坚持，给出时间预期"
+                            },
+                            {
+                                text: "你说的问题我后面会讲到。让我先把前面的逻辑说完，这样更清晰。",
+                                tip: "说明关联性"
+                            },
+                            {
+                                text: "好，我先记录一下你的问题。等我说完这部分，咱们专门讨论。",
+                                tip: "认可 + 延后处理"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                category: "失误救场",
+                icon: "🆘",
+                scenarios: [
+                    {
+                        title: "叫错名字/说错数据",
+                        scripts: [
+                            {
+                                text: "哎呀抱歉！嘴比脑子快了一步。正确的是 XX，耽误大家几秒，咱们继续。",
+                                tip: "坦然认错，快速翻篇"
+                            },
+                            {
+                                text: "不好意思，这个数据我记混了。感谢纠正，我们按正确的来。",
+                                tip: "感谢纠正，展现谦逊"
+                            },
+                            {
+                                text: "抱歉抱歉，今天状态不在最佳。我下来好好复习一下基础知识！",
+                                tip: "自嘲化解，轻松带过"
+                            }
+                        ]
+                    },
+                    {
+                        title: "忘记承诺的任务",
+                        scripts: [
+                            {
+                                text: "抱歉抱歉！是我疏忽了。这事我来兜底，现在马上处理，XX 时间前一定给到结果。",
+                                tip: "主动担责 + 明确时间"
+                            },
+                            {
+                                text: "真的不好意思，最近事情太多搞混了。我立刻优先处理你这个，预计 XX 完成。",
+                                tip: "解释但不甩锅"
+                            },
+                            {
+                                text: "这是我的问题。为了不再发生，我建个待办清单，完成后第一时间同步你。",
+                                tip: "给出预防机制"
+                            }
+                        ]
+                    },
+                    {
+                        title: "邮件/消息发错人",
+                        scripts: [
+                            {
+                                text: "抱歉发错了！请您忽略这条消息，我重新发给正确的收件人。",
+                                tip: "简洁道歉，快速处理"
+                            },
+                            {
+                                text: "不好意思打扰了！手误发错窗口，您当没看见就好😅",
+                                tip: "轻松语气化解尴尬"
+                            },
+                            {
+                                text: "非常抱歉，这条信息涉及隐私，麻烦您删除一下，感谢理解！",
+                                tip: "涉及隐私时诚恳请求"
+                            }
+                        ]
+                    },
+                    {
+                        title: "当众说错话",
+                        scripts: [
+                            {
+                                text: "哎呀，这话说的不妥。我重新表述一下：...",
+                                tip: "立即修正，不纠结"
+                            },
+                            {
+                                text: "抱歉，我表达不准确。我想说的是...",
+                                tip: "承认表达问题，非意图问题"
+                            },
+                            {
+                                text: "这话容易误解，我补充一下背景：...",
+                                tip: "补充语境，化解误会"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                category: "社交寒暄",
+                icon: "☕",
+                scenarios: [
+                    {
+                        title: "电梯里遇到领导",
+                        scripts: [
+                            {
+                                text: "X 总早！最近 XX 项目进展顺利，多亏您上次给的建议。",
+                                tip: "简短汇报 + 感谢"
+                            },
+                            {
+                                text: "领导好！正好有个好消息跟您分享，XX 客户已经签约了。",
+                                tip: "报喜不报忧"
+                            },
+                            {
+                                text: "X 总好！您昨天会上说的 XX 点对我启发很大，我已经在尝试了。",
+                                tip: "反馈收获，展现上进"
+                            }
+                        ]
+                    },
+                    {
+                        title: "食堂/茶水间偶遇",
+                        scripts: [
+                            {
+                                text: "这么晚还在忙啊？注意身体，别太累了。",
+                                tip: "关心式开场"
+                            },
+                            {
+                                text: "你也喜欢这家咖啡啊？他们家 XX 很不错，推荐试试。",
+                                tip: "找共同话题"
+                            },
+                            {
+                                text: "最近看你经常加班，那个项目很辛苦吧？有什么我能帮忙的吗？",
+                                tip: "关心 + 提供帮助"
+                            }
+                        ]
+                    },
+                    {
+                        title: "团建活动中的互动",
+                        scripts: [
+                            {
+                                text: "这个游戏我不太擅长，但我很期待跟大家一起玩！谁愿意跟我一组？",
+                                tip: "示弱 + 主动融入"
+                            },
+                            {
+                                text: "XX 你太厉害了！教教我有什么技巧吗？",
+                                tip: "赞美 + 请教"
+                            },
+                            {
+                                text: "今天玩得开心最重要！输赢无所谓，大家聚一起就是好事。",
+                                tip: "调节气氛"
+                            }
+                        ]
+                    },
+                    {
+                        title: "新员工自我介绍",
+                        scripts: [
+                            {
+                                text: "大家好，我是 XX，负责 XX 业务。之前在 XX 做过类似工作，希望能尽快融入团队，向大家学习！",
+                                tip: "基本信息 + 谦逊态度"
+                            },
+                            {
+                                text: "我是 XX，是个 XX 爱好者。工作上请大家多多指教，业余有时间可以一起 XX！",
+                                tip: "工作 + 爱好，便于记住"
+                            },
+                            {
+                                text: "新人报到！我比较擅长 XX，如果有相关需求随时找我。初来乍到，还请多多关照！",
+                                tip: "展示价值 + 谦逊"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                category: "敏感话题",
+                icon: "⚠️",
+                scenarios: [
+                    {
+                        title: "被问薪资/隐私",
+                        scripts: [
+                            {
+                                text: "哈哈，这个是公司的机密信息，不太方便说。咱们聊点别的吧！",
+                                tip: "幽默带过"
+                            },
+                            {
+                                text: "还行吧，够生活。具体数字真不方便透露，理解一下哈。",
+                                tip: "模糊回应 + 表明立场"
+                            },
+                            {
+                                text: "你怎么突然问这个？是对自己的薪资有疑问吗？可以跟 HR 聊聊。",
+                                tip: "反客为主，转移话题"
+                            }
+                        ]
+                    },
+                    {
+                        title: "被八卦他人是非",
+                        scripts: [
+                            {
+                                text: "这个我不太清楚呢。而且背后说人不太好，咱们还是专注工作吧。",
+                                tip: "装傻 + 表明态度"
+                            },
+                            {
+                                text: "我跟 TA 接触不多，不好评价。不过每个人都有自己的难处吧。",
+                                tip: "不站队，保持中立"
+                            },
+                            {
+                                text: "哈哈，这种八卦我就不参与了，容易被传话😂",
+                                tip: "幽默拒绝"
+                            }
+                        ]
+                    },
+                    {
+                        title: "收到不合理要求",
+                        scripts: [
+                            {
+                                text: "这个要求我理解，但从公司规定/流程上来说确实有困难。你看这样行不行...",
+                                tip: "理解 + 规则 + 替代方案"
+                            },
+                            {
+                                text: "如果这样做，会有 XX 风险。为了安全起见，建议走正规流程。",
+                                tip: "说明风险，站在对方角度"
+                            },
+                            {
+                                text: "我需要请示一下领导，这个超出我的权限了。",
+                                tip: "向上推，不自己扛"
+                            }
+                        ]
+                    },
+                    {
+                        title: "面对情绪化指责",
+                        scripts: [
+                            {
+                                text: "我理解你现在很生气。咱们先冷静一下，一起想想怎么解决问题。",
+                                tip: "共情 + 引导理性"
+                            },
+                            {
+                                text: "你说的我听到了。等我消化一下，咱们 10 分钟后再聊，好吗？",
+                                tip: "暂停对话，避免升级"
+                            },
+                            {
+                                text: "我感受到你很不满。能否具体说说哪里让你不舒服？我想了解清楚。",
+                                tip: "引导具体化，降低情绪"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        let currentCategory = null;
+
+        // 初始化
+        function init() {
+            renderCategories();
+            renderScripts();
+            renderFavorites();
+        }
+
+        // 渲染分类卡片
+        function renderCategories() {
+            const grid = document.getElementById('categoryGrid');
+            grid.innerHTML = `
+                <div class="category-card ${!currentCategory ? 'active' : ''}" onclick="selectCategory(null)">
+                    <div class="category-icon">📚</div>
+                    <div class="category-name">全部</div>
+                </div>
+            `;
+            
+            talkScripts.forEach((cat, index) => {
+                grid.innerHTML += `
+                    <div class="category-card ${currentCategory === cat.category ? 'active' : ''}" onclick="selectCategory('${cat.category}')">
+                        <div class="category-icon">${cat.icon}</div>
+                        <div class="category-name">${cat.category}</div>
+                    </div>
+                `;
+            });
+        }
+
+        // 选择分类
+        function selectCategory(category) {
+            currentCategory = category;
+            renderCategories();
+            renderScripts();
+            
+            const title = category || '全部场景';
+            document.getElementById('sectionTitle').textContent = title;
+        }
+
+        // 渲染话术列表
+        function renderScripts(filterText = '') {
+            const container = document.getElementById('scriptsList');
+            let html = '';
+            
+            const categories = currentCategory 
+                ? talkScripts.filter(c => c.category === currentCategory)
+                : talkScripts;
+            
+            categories.forEach(cat => {
+                cat.scenarios.forEach((scenario, sIndex) => {
+                    const matchScript = scenario.scripts.some(s => 
+                        !filterText || 
+                        scenario.title.includes(filterText) ||
+                        s.text.includes(filterText) ||
+                        s.tip.includes(filterText)
+                    );
+                    
+                    if (!matchScript) return;
+                    
+                    html += `
+                        <div class="scenario-item" onclick="toggleScenario(this)">
+                            <div class="scenario-title">${scenario.title}</div>
+                            <div class="script-list">
+                    `;
+                    
+                    scenario.scripts.forEach((script, i) => {
+                        const isFavorited = favorites.some(f => f.text === script.text);
+                        html += `
+                            <div class="script-item">
+                                <div class="script-text">${script.text}</div>
+                                <div class="script-tip">💡 ${script.tip}</div>
+                                <button class="copy-btn" onclick="copyText(this, '${escapeHtml(script.text)}')">📋 复制</button>
+                                <button class="copy-btn" style="margin-left: 8px; background: ${isFavorited ? '#ffc107' : '#6c757d'};" 
+                                    onclick="toggleFavorite(this, '${escapeHtml(scenario.title)}', '${escapeHtml(script.text)}', '${escapeHtml(script.tip)}')">
+                                    ${isFavorited ? '⭐ 已收藏' : '☆ 收藏'}
+                                </button>
+                            </div>
+                        `;
+                    });
+                    
+                    html += `</div></div>`;
+                });
+            });
+            
+            container.innerHTML = html || '<div class="empty-state"><div class="empty-state-icon">🔍</div><p>没有找到匹配的话术</p></div>';
+        }
+
+        // 切换场景展开/收起
+        function toggleScenario(element) {
+            const list = element.querySelector('.script-list');
+            list.classList.toggle('show');
+        }
+
+        // 复制文本
+        function copyText(btn, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = '✅ 已复制';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 复制';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // 收藏/取消收藏
+        function toggleFavorite(btn, title, text, tip) {
+            const index = favorites.findIndex(f => f.text === text);
+            
+            if (index === -1) {
+                favorites.push({ title, text, tip });
+                btn.textContent = '⭐ 已收藏';
+                btn.style.background = '#ffc107';
+            } else {
+                favorites.splice(index, 1);
+                btn.textContent = '☆ 收藏';
+                btn.style.background = '#6c757d';
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            renderFavorites();
+        }
+
+        // 渲染收藏夹
+        function renderFavorites() {
+            const container = document.getElementById('favoritesList');
+            
+            if (favorites.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⭐</div><p>还没有收藏任何话术<br>点击"收藏"按钮添加常用话术</p></div>';
+                return;
+            }
+            
+            let html = '';
+            favorites.forEach(fav => {
+                html += `
+                    <div class="script-item">
+                        <div style="font-size: 13px; color: #667eea; margin-bottom: 8px;">📁 ${fav.title}</div>
+                        <div class="script-text">${fav.text}</div>
+                        <div class="script-tip">💡 ${fav.tip}</div>
+                        <button class="copy-btn" onclick="copyText(this, '${escapeHtml(fav.text)}')">📋 复制</button>
+                        <button class="copy-btn" style="margin-left: 8px; background: #dc3545;" 
+                            onclick="removeFavorite('${escapeHtml(fav.text)}')">删除</button>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // 删除收藏
+        function removeFavorite(text) {
+            favorites = favorites.filter(f => f.text !== text);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            renderFavorites();
+            renderScripts();
+        }
+
+        // 搜索功能
+        function searchScripts() {
+            const text = document.getElementById('searchInput').value.trim();
+            renderScripts(text);
+        }
+
+        // 切换视图
+        function switchView(view) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const views = document.querySelectorAll('.view-section');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            views.forEach(v => v.classList.remove('active'));
+            
+            if (view === 'all') {
+                tabs[0].classList.add('active');
+                document.getElementById('allView').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('favoritesView').classList.add('active');
+                renderFavorites();
+            }
+        }
+
+        // HTML 转义
+        function escapeHtml(text) {
+            return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
+        // 启动应用
+        init();
+    </script>
+</body>
+</html>
